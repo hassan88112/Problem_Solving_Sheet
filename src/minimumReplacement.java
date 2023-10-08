@@ -6,24 +6,16 @@
 
 class minimumReplacement {
     public static long minimumReplacementProblem(int[] nums) {
-        int n = nums.length;
-        int last = nums[n - 1];  // Initialize 'last' with the last element
-        long ans = 0;  // Initialize the total operations count
+        long ans = 0;
 
-        // Traverse the array in reverse order
-        for (int i = n - 2; i >= 0; --i) {
-            if (nums[i] > last) {  // If the current element needs replacement >>shoof arrangement el2wl
-                int t = nums[i] / last;  // Calculate how many times the element needs to be divided
-                if (nums[i] % last != 0) {
-                    t++;  // If there's a remainder, increment 't'
-                }
-                last = nums[i] / t;  // Update 'last' for the next comparison
-                ans += t - 1;  // Add (t - 1) to 'ans' for the number of operations
-            } else {
-                last = nums[i];  // Update 'last' without replacement
-            }
+        int max = nums[nums.length - 1];
+        for (int i = nums.length - 2; i >= 0; --i) {
+            final int ops = (nums[i] - 1) / max;
+            ans += ops;
+            max = nums[i] / (ops + 1);
         }
-        return ans;  // Return the total number of operations
+
+        return ans;
     }
     public static void main(String[] args) {
         int[] nums1 = {3, 9, 3};
